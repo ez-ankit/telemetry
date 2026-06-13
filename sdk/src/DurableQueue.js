@@ -23,7 +23,8 @@
       eventType: eventType,
       payload: payload || {},
       user_id: user.user_id,
-      email: user.email
+      email: user.email,
+      full_name: user.full_name
     };
 
     this._store.add(event, function () {

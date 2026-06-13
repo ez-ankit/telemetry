@@ -89,6 +89,7 @@
         payload: eventData.payload,
         user_id: eventData.user_id,
         email: eventData.email,
+        full_name: eventData.full_name,
         syncStatus: 'pending',
         retryCount: 0,
         lastAttempt: null,

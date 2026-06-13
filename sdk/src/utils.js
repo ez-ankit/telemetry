@@ -99,7 +99,7 @@
   AnalyticsUtils.getUser = function () {
     try {
       var s = localStorage.getItem('currentUser');
-      if (s) { var p = JSON.parse(s); return { user_id: p.user_id, email: p.email }; }
+      if (s) { var p = JSON.parse(s); return { user_id: p.user_id, email: p.email, full_name: p.full_name }; }
     } catch (_) {}
     return {};
   };

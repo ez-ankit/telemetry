@@ -78,7 +78,8 @@
             eventType: records[i].eventType,
             payload: records[i].payload,
             user_id: records[i].user_id,
-            email: records[i].email
+            email: records[i].email,
+            full_name: records[i].full_name
           });
         }
 

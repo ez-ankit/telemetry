@@ -104,7 +104,7 @@
   U.getUser = function () {
     try {
       var s = localStorage.getItem('currentUser');
-      if (s) { var p = JSON.parse(s); return { userId: p.user_id, email: p.email }; }
+      if (s) { var p = JSON.parse(s); return { userId: p.user_id, email: p.email, fullName: p.full_name }; }
     } catch (_) {}
     return {};
   };
@@ -116,7 +116,7 @@
         var list = JSON.parse(s);
         for (var i = 0; i < list.length; i++) {
           if (list[i].app_name === appName) {
-            return { enterpriseId: list[i].enterprise_id, roleId: list[i].role_id };
+            return { enterpriseId: list[i].enterprise_id, roleId: list[i].role_id, enterpriseName: list[i].enterprise_name, roleName: list[i].rolename };
           }
         }
       }
@@ -262,8 +262,9 @@
         eventId: d.eventId, sessionId: d.sessionId, visitorId: d.visitorId,
         timestamp: d.timestamp, pageUrl: d.pageUrl, userAgent: d.userAgent, os: d.os, ip: d.ip,
         eventType: d.eventType, payload: d.payload,
-        userId: d.userId, email: d.email,
+        userId: d.userId, email: d.email, fullName: d.fullName,
         appName: d.appName, enterpriseId: d.enterpriseId, roleId: d.roleId,
+        enterpriseName: d.enterpriseName, roleName: d.roleName,
         syncStatus: 'pending', retryCount: 0, lastAttempt: null, createdAt: U.now()
       };
       var req = tx.objectStore(SN).add(r);
@@ -402,8 +403,9 @@
       eventId: U.genId(), sessionId: this._sm.getId(), visitorId: this._vm.getId(),
       timestamp: U.now(), pageUrl: U.url(), userAgent: U.ua(), os: U.getOS(), ip: U.ip,
       eventType: type, payload: payload || {},
-      userId: user.userId, email: user.email,
-      appName: appName, enterpriseId: role.enterpriseId, roleId: role.roleId
+      userId: user.userId, email: user.email, fullName: user.fullName,
+      appName: appName, enterpriseId: role.enterpriseId, roleId: role.roleId,
+      enterpriseName: role.enterpriseName, roleName: role.roleName
     };
     this._db.add(ev, function () { if (self._se) { self._se.notify(); } });
     return ev;
@@ -500,8 +502,9 @@
             pageUrl: recs[i].pageUrl, userAgent: recs[i].userAgent,
             os: recs[i].os, ip: recs[i].ip,
             eventType: recs[i].eventType, payload: recs[i].payload,
-            userId: recs[i].userId, email: recs[i].email,
-            appName: recs[i].appName, enterpriseId: recs[i].enterpriseId, roleId: recs[i].roleId
+            userId: recs[i].userId, email: recs[i].email, fullName: recs[i].fullName,
+            appName: recs[i].appName, enterpriseId: recs[i].enterpriseId, roleId: recs[i].roleId,
+            enterpriseName: recs[i].enterpriseName, roleName: recs[i].roleName
           });
         }
 

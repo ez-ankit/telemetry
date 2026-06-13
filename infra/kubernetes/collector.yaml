@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry-collector
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: telemetry-collector
+  template:
+    metadata:
+      labels:
+        app: telemetry-collector
+    spec:
+      containers:
+        - name: collector
+          image: telemetry/collector-api:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: KAFKA_BROKER
+              value: kafka:9092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: telemetry-collector
+spec:
+  ports:
+    - port: 8081
+  selector:
+    app: telemetry-collector
